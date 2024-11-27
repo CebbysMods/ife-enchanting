@@ -16,10 +16,6 @@ tasks.named('wrapper', Wrapper).configure {
 version = mod_version
 group = mod_group_id
 
-repositories {
-    mavenLocal()
-}
-
 base {
     archivesName = mod_id
 }
@@ -111,7 +107,38 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        name 'jared maven'
+        url "https://maven.blamejared.com/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    repositories {
+        maven {
+            name = "TerraformersMC"
+            url = "https://maven.terraformersmc.com/"
+        }
+    }
+}
+
 dependencies {
+    compileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+    testCompileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    testAnnotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+
+    localRuntime "com.buuz135:industrialforegoing:1.21-3.6.19"
+    compileOnly "com.buuz135:industrialforegoing:1.21-3.6.19"
+    localRuntime "com.hrznstudio:titanium:1.21-4.0.30"
+    compileOnly "com.hrznstudio:titanium:1.21-4.0.30"
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -129,10 +156,6 @@ dependencies {
 
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
